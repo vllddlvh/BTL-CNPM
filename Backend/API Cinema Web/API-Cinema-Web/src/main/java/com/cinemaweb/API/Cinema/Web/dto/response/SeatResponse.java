@@ -1,0 +1,17 @@
+package com.cinemaweb.API.Cinema.Web.dto.response;
+
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class SeatResponse {
+    String roomName;
+    String seatType;
+    String seatRow;
+    int seatNumber;
+    double seatPrice;
+}
