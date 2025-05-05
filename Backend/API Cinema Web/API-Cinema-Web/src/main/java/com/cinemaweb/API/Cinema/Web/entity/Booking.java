@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 import java.time.LocalDateTime;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
+import static java.time.LocalDateTime.now;
 
 @Entity
 @Data
@@ -19,7 +20,9 @@ public class Booking {
     @GeneratedValue(strategy = IDENTITY)
     int bookingId;
 
-    int scheduleId;
+    @ManyToOne
+    @JoinColumn(name = "schedule_id")
+    Schedule schedule;
 
     @ManyToOne
     @JoinColumn(name = "seat_id")
