@@ -9,6 +9,10 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class RoomResponse {
+    int cinemaId;
+    int foodAndDrinkId;
+    int movieId;
+    int roomId;
     String cinemaName;
     String roomName;
 }

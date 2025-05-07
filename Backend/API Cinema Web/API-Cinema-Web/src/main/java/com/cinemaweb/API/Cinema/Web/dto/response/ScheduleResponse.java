@@ -12,6 +12,7 @@ import java.time.LocalTime;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ScheduleResponse {
+    int scheduleId;
     String movieName;
     String roomName;
     String cinemaName;
