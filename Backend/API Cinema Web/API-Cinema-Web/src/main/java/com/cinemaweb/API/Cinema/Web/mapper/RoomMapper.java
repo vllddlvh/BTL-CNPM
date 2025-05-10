@@ -11,6 +11,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface RoomMapper {
+    @Mapping(source= "cinema.cinemaId", target="cinemaId")
     @Mapping(source = "cinema.cinemaName", target = "cinemaName")
     RoomResponse toRoomResponse(Room room);
 
@@ -20,6 +21,7 @@ public interface RoomMapper {
     @Mapping(target = "cinema", ignore = true)
     void toUpdateRoom(@MappingTarget Room room, RoomRequest RoomUpdateRequest);
 
+    @Mapping(source= "cinema.cinemaId", target="cinemaId")
     @Mapping(source = "cinema.cinemaName", target = "cinemaName")
     List<RoomResponse> toRoomResponseList(List<Room> room);
 }
