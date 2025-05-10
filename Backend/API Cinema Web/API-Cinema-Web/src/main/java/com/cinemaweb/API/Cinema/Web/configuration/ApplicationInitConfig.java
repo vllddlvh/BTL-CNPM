@@ -1,7 +1,9 @@
 package com.cinemaweb.API.Cinema.Web.configuration;
 
+import com.cinemaweb.API.Cinema.Web.entity.Permission;
+import com.cinemaweb.API.Cinema.Web.entity.Role;
 import com.cinemaweb.API.Cinema.Web.entity.User;
-import com.cinemaweb.API.Cinema.Web.enums.Role;
+import com.cinemaweb.API.Cinema.Web.enums.Roles;
 import com.cinemaweb.API.Cinema.Web.repository.RoleRepository;
 import com.cinemaweb.API.Cinema.Web.repository.UserRepository;
 import lombok.AccessLevel;
@@ -26,19 +28,26 @@ public class ApplicationInitConfig {
     PasswordEncoder passwordEncoder;
     RoleRepository roleRepository;
 
-
     @Bean
     public ApplicationRunner applicationRunner(UserRepository userRepository) {
         return args -> {
+
             if (!userRepository.existsByUsername("admin")) {
-                var roles = new HashSet<>(roleRepository.findAllById(List.of(Role.ADMIN.name())));
+
+                Role adminRole = Role.builder()
+                        .name("ADMIN")
+                        .description("Admin role")
+                        .build();
+                roleRepository.save(adminRole);
+
+                var roles = new HashSet<>(roleRepository.findAllById(List.of(Roles.ADMIN.name())));
                 User user = User.builder()
                         .username("admin")
                         .password(passwordEncoder.encode("admin"))
                         .gender(1)
                         .roles(roles)
                         .phoneNumber("000000000")
-                        .email("admin@cinemaweb.com")
+                        .email("phuong6905s6@gmail.com")
                         .firstName("admin")
                         .lastName("admin")
                         .dateOfBirth(LocalDate.parse("2005-09-06"))

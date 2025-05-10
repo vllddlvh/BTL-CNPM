@@ -3,9 +3,8 @@ package com.cinemaweb.API.Cinema.Web.service;
 import com.cinemaweb.API.Cinema.Web.dto.request.UserCreationRequest;
 import com.cinemaweb.API.Cinema.Web.dto.request.UserUpdateRequest;
 import com.cinemaweb.API.Cinema.Web.dto.response.UserResponse;
-import com.cinemaweb.API.Cinema.Web.entity.PasswordOTP;
 import com.cinemaweb.API.Cinema.Web.entity.User;
-import com.cinemaweb.API.Cinema.Web.enums.Role;
+import com.cinemaweb.API.Cinema.Web.enums.Roles;
 import com.cinemaweb.API.Cinema.Web.exception.AppException;
 import com.cinemaweb.API.Cinema.Web.exception.ErrorCode;
 import com.cinemaweb.API.Cinema.Web.mapper.UserMapper;
@@ -58,7 +57,7 @@ public class UserService {
         }
         User user = userMapper.toUser(request);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        var roles = roleRepository.findAllById(List.of(Role.USER.name()));
+        var roles = roleRepository.findAllById(List.of(Roles.USER.name()));
         user.setRoles(new HashSet<>(roles));
         return userMapper.toUserResponse(userRepository.save(user));
     }
