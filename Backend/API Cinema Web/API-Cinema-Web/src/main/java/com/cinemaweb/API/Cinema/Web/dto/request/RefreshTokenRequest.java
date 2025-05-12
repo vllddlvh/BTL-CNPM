@@ -10,6 +10,6 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class RefreshTokenRequest {
-    @NotNull
+    @NotNull(message = "TOKEN_IS_NULL")
     String token;
 }

@@ -13,7 +13,7 @@ import java.util.List;
 public interface RoomMapper {
     @Mapping(source= "cinema.cinemaId", target="cinemaId")
     @Mapping(source = "cinema.cinemaName", target = "cinemaName")
-    @Mapping(source = "foodAndDrink.foodAndDrinkId", target = "foodAndDrinkId")
+//    @Mapping(source = "foodAndDrink.foodAndDrinkId", target = "foodAndDrinkId")
     RoomResponse toRoomResponse(Room room);
 
     @Mapping(source = "cinemaId", target = "cinema.cinemaId")

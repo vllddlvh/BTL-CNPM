@@ -38,7 +38,13 @@ public class ApplicationInitConfig {
                         .name("ADMIN")
                         .description("Admin role")
                         .build();
+                Role userRole = Role.builder()
+                        .name("USER")
+                        .description("User role")
+                        .build();
                 roleRepository.save(adminRole);
+                roleRepository.save(userRole);
+
 
                 var roles = new HashSet<>(roleRepository.findAllById(List.of(Roles.ADMIN.name())));
                 User user = User.builder()
@@ -53,7 +59,7 @@ public class ApplicationInitConfig {
                         .dateOfBirth(LocalDate.parse("2005-09-06"))
                         .build();
                 userRepository.save(user);
-                log.warn("admin account has been created with default password: admin!");
+                log.info("admin account has been created with default password: admin!");
             }
         };
     }

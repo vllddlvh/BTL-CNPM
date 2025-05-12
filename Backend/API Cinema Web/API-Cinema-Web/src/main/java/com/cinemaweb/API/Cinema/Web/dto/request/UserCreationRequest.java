@@ -1,6 +1,8 @@
 package com.cinemaweb.API.Cinema.Web.dto.request;
 
 
+import com.cinemaweb.API.Cinema.Web.validator.UniqueEmail;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -25,19 +27,21 @@ public class UserCreationRequest {
     String password;
     @NotNull(message = "PASSWORD_IS_NULL")
     String checkPassword;
-    @NotNull
+
     String firstName;
-    @NotNull
+    @NotNull(message = "LASTNAME_IS_NULL")
     String lastName;
 
     @NotNull(message = "DOB_IS_NULL")
     LocalDate dateOfBirth;
 
     @NotNull(message = "EMAIL_IS_NULL")
+            @Email(message = "INVALID_EMAIL")
+            @UniqueEmail(message = "EMAIL_EXISTED")
     String email;
-    @NotNull
+    @NotNull(message = "PHONE_NUMBER_NULL")
     String phoneNumber;
-    @NotNull
+    @NotNull(message = "GENDER_NULL")
     Integer gender;
     String avatar = "default avatar";
 

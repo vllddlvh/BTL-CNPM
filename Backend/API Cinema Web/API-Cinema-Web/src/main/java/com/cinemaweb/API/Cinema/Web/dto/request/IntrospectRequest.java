@@ -10,6 +10,6 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class IntrospectRequest {
-    @NotNull
+    @NotNull(message = "TOKEN_IS_NULL")
     String token;
 }

@@ -26,7 +26,6 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ApiResponse<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
-        log.warn("dang login");
         return ApiResponse.<AuthenticationResponse>builder()
                 .body(authenticationService.authenticate(request))
                 .build();
