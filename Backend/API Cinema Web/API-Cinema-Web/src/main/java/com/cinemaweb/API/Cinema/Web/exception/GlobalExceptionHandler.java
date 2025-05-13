@@ -76,10 +76,12 @@ public class GlobalExceptionHandler {
     }
 
 
-    // Http request body
+    // Bắt lỗi Http request body
+    // VD: Request thiếu body, các attribute trong body bị sai cú pháp, sai kiểu dữ liệu...
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     public ResponseEntity<ApiResponseError> handlingHttpMessageNotReadableException(HttpMessageNotReadableException e) {
         ApiResponseError apiResponseError = ApiResponseError.builder()
+                .code(ErrorCode.RUNTIME_EXCEPTION.getCode())
                 .message(e.getMessage())
                 .build();
 
@@ -89,7 +91,7 @@ public class GlobalExceptionHandler {
     }
 
 
-    // Request bị chặn do không được authorized
+    // Request bị chặn do chưa được authorized
     @ExceptionHandler(value = AccessDeniedException.class)
     public ResponseEntity<ApiResponseError> handlingAccessDeniedException(AccessDeniedException e) {
         ErrorCode errorCode = ErrorCode.UNAUTHORIZED;
@@ -107,7 +109,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = TransactionSystemException.class)
     public ResponseEntity<ApiResponseError> handlingTransactionSystemException(TransactionSystemException e) {
         ApiResponseError apiResponseError = ApiResponseError.builder()
-                .code(1111)
+                .code(9991)
                 .message(e.getMessage())
                 .build();
 
@@ -119,7 +121,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = RollbackException.class)
     public ResponseEntity<ApiResponseError> handlingRollbackException(RollbackException e) {
         ApiResponseError apiResponseError = ApiResponseError.builder()
-                .code(1111)
+                .code(9992)
                 .message(e.getMessage())
                 .build();
 

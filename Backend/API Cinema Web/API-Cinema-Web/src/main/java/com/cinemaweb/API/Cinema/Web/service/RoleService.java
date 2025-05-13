@@ -39,7 +39,7 @@ public class RoleService {
 
     public RoleResponse get(String name) {
         return roleMapper.toRoleResponse(roleRepository.findById(name)
-                .orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_EXISTS)));
+                .orElseThrow(() -> new AppException(ErrorCode.INVALID_ROLE)));
     }
 
     public List<RoleResponse> getAll() {

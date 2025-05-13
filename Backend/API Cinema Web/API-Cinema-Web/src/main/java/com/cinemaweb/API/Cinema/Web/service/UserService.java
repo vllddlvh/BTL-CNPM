@@ -1,7 +1,9 @@
 package com.cinemaweb.API.Cinema.Web.service;
 
+import com.cinemaweb.API.Cinema.Web.dto.request.PointUpdateRequest;
 import com.cinemaweb.API.Cinema.Web.dto.request.UserCreationRequest;
 import com.cinemaweb.API.Cinema.Web.dto.request.UserUpdateRequest;
+import com.cinemaweb.API.Cinema.Web.dto.response.PointUpdateResponse;
 import com.cinemaweb.API.Cinema.Web.dto.response.UserResponse;
 import com.cinemaweb.API.Cinema.Web.entity.User;
 import com.cinemaweb.API.Cinema.Web.enums.Roles;
@@ -34,8 +36,13 @@ public class UserService {
     EmailService emailService;
     PasswordOtpRepository passwordTokenRepository;
 
-    public UserResponse get(String id) {
+    public UserResponse getById(String id) {
         return userMapper.toUserResponse(userRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTS)));
+    }
+
+    public UserResponse getByEmail(String email) {
+        return userMapper.toUserResponse(userRepository.findByEmail(email)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTS)));
     }
 
@@ -71,7 +78,7 @@ public class UserService {
         if (request.getRoles() != null && !request.getRoles().isEmpty()) {
             var roles = roleRepository.findAllById(request.getRoles());
             if (roles.isEmpty())
-                throw new RuntimeException("Invalid role");
+                throw new AppException(ErrorCode.INVALID_ROLE);
             user.setRoles(new HashSet<>(roles));
         }
         return userMapper.toUserResponse(userRepository.save(user));
@@ -91,5 +98,15 @@ public class UserService {
     public User resetPassword(User user, String newPassword) {
         user.setPassword(passwordEncoder.encode(newPassword));
         return userRepository.save(user);
+    }
+
+
+    public PointUpdateResponse updatePoint(PointUpdateRequest request) {
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTS));
+        if (user.getPoint() == null) {
+            user.setPoint(request.getPoint());
+        } else user.getBonus(request.getPoint());
+        return userMapper.toPointResponse(userRepository.save(user));
     }
 }

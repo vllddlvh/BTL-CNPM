@@ -3,6 +3,8 @@ package com.cinemaweb.API.Cinema.Web.service;
 import com.cinemaweb.API.Cinema.Web.dto.request.PermissionRequest;
 import com.cinemaweb.API.Cinema.Web.dto.response.PermissionResponse;
 import com.cinemaweb.API.Cinema.Web.entity.Permission;
+import com.cinemaweb.API.Cinema.Web.exception.AppException;
+import com.cinemaweb.API.Cinema.Web.exception.ErrorCode;
 import com.cinemaweb.API.Cinema.Web.mapper.PermissionMapper;
 import com.cinemaweb.API.Cinema.Web.repository.PermissionRepository;
 import lombok.AccessLevel;
@@ -22,6 +24,8 @@ public class PermissionService {
     PermissionMapper permissionMapper;
 
     public PermissionResponse create(PermissionRequest request) {
+        if (permissionRepository.existsById(request.getName()))
+            throw new AppException(ErrorCode.PERMISSION_EXISTED);
         Permission permission = permissionMapper.toPermission(request);
         permission = permissionRepository.save(permission);
         return permissionMapper.toPermissionResponse(permission);
@@ -29,7 +33,7 @@ public class PermissionService {
 
     public PermissionResponse get(String permissionName) {
         return permissionMapper.toPermissionResponse(permissionRepository.findById(permissionName)
-                .orElseThrow(() -> new RuntimeException("Permission do not exists")));
+                .orElseThrow(() -> new AppException(ErrorCode.INVALID_PERMISSION)));
     }
 
     public List<PermissionResponse> getAll() {

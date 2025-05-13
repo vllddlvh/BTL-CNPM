@@ -24,6 +24,7 @@ public class RoleController {
     RoleService roleService;
 
     @PostMapping()
+    @PreAuthorize("hasRole('ADMIN')")
     public ApiResponse<RoleResponse> create(@RequestBody @Valid RoleRequest request) {
         return ApiResponse.<RoleResponse>builder()
                 .body(roleService.create(request))
