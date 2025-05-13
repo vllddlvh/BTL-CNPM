@@ -4,12 +4,15 @@ import com.cinemaweb.API.Cinema.Web.dto.request.RoomRequest;
 import com.cinemaweb.API.Cinema.Web.dto.response.RoomResponse;
 import com.cinemaweb.API.Cinema.Web.entity.Cinema;
 import com.cinemaweb.API.Cinema.Web.entity.Room;
+import com.cinemaweb.API.Cinema.Web.entity.Seat;
 import com.cinemaweb.API.Cinema.Web.mapper.RoomMapper;
 import com.cinemaweb.API.Cinema.Web.repository.CinemaRepository;
 import com.cinemaweb.API.Cinema.Web.repository.RoomRepository;
+import com.cinemaweb.API.Cinema.Web.repository.SeatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,6 +26,9 @@ public class RoomService {
     @Autowired
     private CinemaRepository cinemaRepository;
 
+    @Autowired
+    private SeatRepository seatRepository;
+
     public List<RoomResponse> getAllRooms() {
         return roomMapper.toRoomResponseList(roomRepository.findAll());
     }
@@ -33,7 +39,43 @@ public class RoomService {
     }
 
     public void createRoom(RoomRequest roomCreateRequest) {
-        roomRepository.save(roomMapper.toCreateRoom(roomCreateRequest));
+        List<Seat> seats = new ArrayList<>();
+        int numRows = roomCreateRequest.getNumRow();
+        int numCols = roomCreateRequest.getNumCol();
+        Room room = roomMapper.toCreateRoom(roomCreateRequest);
+
+        roomRepository.save(room);
+
+        for (int row = 1; row <= numRows; row++) {
+            char alphabetRow = (char) (row + 64);
+            for (int col = 1; col < numCols; col++) {
+                Seat seat = Seat.builder()
+                        .room(room)
+                        .seatType("")
+                        .seatRow(alphabetRow)
+                        .seatPrice(100000)
+                        .seatState(false)
+                        .build();
+                if(row == numRows) {
+                    seat.setSeatType("Couple");
+                    seat.setSeatPrice(250000);
+                } else if(row <= 3) {
+                    seat.setSeatType("Head");
+                    seat.setSeatPrice(100000);
+                } else if(row <= numRows - 3 &&
+                        col >= numCols/4 &&
+                        col <= numCols - numCols/4) {
+                    seat.setSeatType("Center");
+                    seat.setSeatPrice(140000);
+                } else {
+                    seat.setSeatType("Tails");
+                    seat.setSeatPrice(120000);
+                }
+                seats.add(seat);
+            }
+        }
+
+        seatRepository.saveAll(seats);
     }
 
     public void updateRoom(String roomId,RoomRequest roomUpdateRequest) {

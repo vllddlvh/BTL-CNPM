@@ -24,7 +24,7 @@ public class Seat {
     Room room;
 
     String seatType;
-    String seatRow;
+    char seatRow;
     int seatNumber;
     double seatPrice;
     boolean seatState; // 0 is not sold, 1 is sold
