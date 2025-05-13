@@ -12,9 +12,11 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface SeatMapper {
     @Mapping(source = "room.roomName", target = "roomName")
+    @Mapping(source = "room.roomId", target = "roomId")
     SeatResponse toSeatResponse(Seat seat);
 
     @Mapping(source = "room.roomName", target = "roomName")
+    @Mapping(source = "room.roomId", target = "roomId")
     List<SeatResponse> toSeatResponseList(List<Seat> seat);
 
     @Mapping(source = "roomId", target = "room.roomId")
