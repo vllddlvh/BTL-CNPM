@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
                 .build();
 
         return ResponseEntity
-                .status(ErrorCode.UNKNOWN_EXCEPTION.getHttpStatusCode())
+                .status(ErrorCode.RUNTIME_EXCEPTION.getHttpStatusCode())
                 .body(apiResponseError);
 
     }
