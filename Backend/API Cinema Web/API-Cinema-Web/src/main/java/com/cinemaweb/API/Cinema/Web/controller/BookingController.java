@@ -5,6 +5,7 @@ import com.cinemaweb.API.Cinema.Web.dto.response.BookingResponse;
 import com.cinemaweb.API.Cinema.Web.service.BookingService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,6 +20,7 @@ public class BookingController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public String createBooking(@RequestBody @Valid BookingRequest bookingRequest) {
         bookingService.createBooking(bookingRequest);
         return "Creation booking finished";
