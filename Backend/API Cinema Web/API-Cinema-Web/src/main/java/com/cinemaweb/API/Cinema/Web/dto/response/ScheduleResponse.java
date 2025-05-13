@@ -13,6 +13,9 @@ import java.time.LocalTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ScheduleResponse {
     int scheduleId;
+    int movieId;
+    int roomId;
+    int cinemaId;
     String movieName;
     String roomName;
     String cinemaName;

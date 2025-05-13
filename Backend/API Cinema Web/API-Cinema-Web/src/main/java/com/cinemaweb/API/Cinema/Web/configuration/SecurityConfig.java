@@ -32,7 +32,11 @@ public class SecurityConfig {
             "/auth/logout",
             "/auth/refresh-Token",
             "/auth/forget-password",
-            "/auth/reset-password/**"
+            "/auth/reset-password/**",
+    };
+    private final String[] PUBLIC_ENDPOINTS_GET = {
+            "/movies",
+            "/payment/create_payment"
     };
 
 
@@ -46,6 +50,7 @@ public class SecurityConfig {
 
         httpSecurity.authorizeHttpRequests(request -> request
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, PUBLIC_ENDPOINTS_GET).permitAll()
                         .requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
                         .anyRequest().authenticated()
                 );

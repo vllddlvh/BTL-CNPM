@@ -20,5 +20,5 @@ public class MovieRequest {
     String movieGenre;
     int movieLength;  //this time watch film
     String movieDescription;
-    int movieReview;  //its star 1* 2* 3* ...
+    Double movieReview;  //its star 1* 2* 3* ...
 }
