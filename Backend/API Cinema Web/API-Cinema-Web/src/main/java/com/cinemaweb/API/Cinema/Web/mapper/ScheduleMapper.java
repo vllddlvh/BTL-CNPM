@@ -14,11 +14,17 @@ public interface ScheduleMapper {
     @Mapping(source = "movie.movieName", target = "movieName")
     @Mapping(source = "room.roomName", target = "roomName")
     @Mapping(source = "cinema.cinemaName", target = "cinemaName")
+    @Mapping(source = "room.roomId", target = "roomId")
+    @Mapping(source = "movie.movieId", target = "movieId")
+    @Mapping(source = "cinema.cinemaId", target = "cinemaId")
     ScheduleResponse toScheduleResponse(Schedule schedule);
 
     @Mapping(source = "movie.movieName", target = "movieName")
     @Mapping(source = "room.roomName", target = "roomName")
     @Mapping(source = "cinema.cinemaName", target = "cinemaName")
+    @Mapping(source = "room.roomId", target = "roomId")
+    @Mapping(source = "movie.movieId", target = "movieId")
+    @Mapping(source = "cinema.cinemaId", target = "cinemaId")
     List<ScheduleResponse> toScheduleResponseList(List<Schedule> scheduleList);
 
     @Mapping(source = "movieId", target = "movie.movieId")

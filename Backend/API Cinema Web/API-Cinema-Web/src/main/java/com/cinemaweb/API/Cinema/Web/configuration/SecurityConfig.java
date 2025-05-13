@@ -32,7 +32,7 @@ public class SecurityConfig {
             "/auth/logout",
             "/auth/refresh-Token",
             "/auth/forget-password",
-            "/auth/reset-password/**"
+            "/auth/reset-password/**",
     };
 
 
@@ -46,6 +46,7 @@ public class SecurityConfig {
 
         httpSecurity.authorizeHttpRequests(request -> request
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/movies").permitAll()
                         .requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
                         .anyRequest().authenticated()
                 );
