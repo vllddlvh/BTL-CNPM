@@ -26,7 +26,7 @@ public class EmailService {
 
     public void sendResetPasswordOtp(User user, PasswordOTP passwordOTP) throws MailException {
         String OTP = passwordOTP.getOTP();
-        String resetLink = "http://localhost:8080/api/auth/reset-password/" + OTP;
+        String resetLink = "http://localhost:3000/reset-password/" + OTP;
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(user.getEmail());
         message.setFrom(SYSTEM_EMAIL_ADDRESS);
