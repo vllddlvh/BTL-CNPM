@@ -5,6 +5,7 @@ import com.cinemaweb.API.Cinema.Web.dto.response.FoodAndDrinkResponse;
 import com.cinemaweb.API.Cinema.Web.service.FoodAndDrinkService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,18 +27,21 @@ public class FoodAndDrinkController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public String createFoodAndDrink(@RequestBody @Valid FoodAndDrinkRequest fdCreateRequest) {
         foodAndDrinkService.createFoodAndDrink(fdCreateRequest);
         return "Creation fd finish";
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String updateFoodAndDrink(@RequestBody @Valid FoodAndDrinkRequest fdUpdateRequest, @PathVariable String id) {
         foodAndDrinkService.updateFoodAndDrink(id, fdUpdateRequest);
         return "fd with id " + id + " has been updating";
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteFoodAndDrink(@PathVariable String id) {
         foodAndDrinkService.deleteFoodAndDrink(id);
         return "fd with id " + id + " has been delete";

@@ -44,19 +44,12 @@ public class SecurityConfig {
         // Bật CORS filter
         httpSecurity.cors(Customizer.withDefaults());
 
-        httpSecurity
-                .authorizeHttpRequests(authz -> authz
-                        // Rule này PHẢI đứng đầu để cho phép preflight
+        httpSecurity.authorizeHttpRequests(request -> request
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-
-                        // Sau đó là các endpoint công khai
                         .requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
-
-                        // Tất cả các request khác phải xác thực
                         .anyRequest().authenticated()
                 );
 
-        // Resource server config (JWT)
         httpSecurity.oauth2ResourceServer(oauth2 ->
                 oauth2.jwt(jwtConfigurer ->
                                 jwtConfigurer.decoder(customJwtDecoder)
@@ -64,7 +57,6 @@ public class SecurityConfig {
                         .authenticationEntryPoint(new JwtAuthenticationEntryPoint())
         );
 
-        // Tắt CSRF
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
 
         return httpSecurity.build();

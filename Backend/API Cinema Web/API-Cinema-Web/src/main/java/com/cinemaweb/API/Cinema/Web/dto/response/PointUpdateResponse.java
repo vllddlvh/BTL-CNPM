@@ -3,14 +3,15 @@ package com.cinemaweb.API.Cinema.Web.dto.response;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class RoomResponse {
-    int cinemaId;
-    int roomId;
-    String cinemaName;
-    String roomName;
+public class PointUpdateResponse {
+    String ID;
+    String lastName;
+    String email;
+    double point;
+
 }

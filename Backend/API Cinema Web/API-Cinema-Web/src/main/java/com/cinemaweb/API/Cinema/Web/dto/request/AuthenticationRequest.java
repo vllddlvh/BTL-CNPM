@@ -10,8 +10,8 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AuthenticationRequest {
-    @NotNull
+    @NotNull(message = "USERNAME_IS_NULL")
     String username;
-    @NotNull
+    @NotNull(message = "PASSWORD_IS_NULL")
     String password;
 }

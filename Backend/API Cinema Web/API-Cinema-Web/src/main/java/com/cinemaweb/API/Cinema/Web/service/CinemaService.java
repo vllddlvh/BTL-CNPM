@@ -29,14 +29,26 @@ public class CinemaService {
     }
 
     public void createCinema(CinemaRequest cinemaCreateRequest) {
+        if(cinemaRepository.existsByCinemaName(cinemaCreateRequest.getCinemaName())) {
+            throw new RuntimeException("You can't create because cinema name has existed!");
+        }
         cinemaRepository.save(cinemaMapper.toCinema(cinemaCreateRequest));
     }
 
     public void updateCinema(String cinemaId,CinemaRequest cinemaUpdateRequest) {
         Cinema cinema = cinemaRepository.findById(cinemaId).orElseThrow(()
                 -> new RuntimeException("Cinema id is not found"));
-        cinemaMapper.toUpdateCinema(cinema, cinemaUpdateRequest);
-        cinemaRepository.save(cinema);
+        if(cinema.getCinemaName().equals(cinemaUpdateRequest.getCinemaName())) {
+            cinemaMapper.toUpdateCinema(cinema, cinemaUpdateRequest);
+            cinemaRepository.save(cinema);
+        } else {
+            if (cinemaRepository.existsByCinemaName(cinemaUpdateRequest.getCinemaName())) {
+                throw new RuntimeException("You can't update because cinema name has existed!");
+            } else {
+                cinemaMapper.toUpdateCinema(cinema, cinemaUpdateRequest);
+                cinemaRepository.save(cinema);
+            }
+        }
     }
 
     public void deleteCinema(String cinemaId) {

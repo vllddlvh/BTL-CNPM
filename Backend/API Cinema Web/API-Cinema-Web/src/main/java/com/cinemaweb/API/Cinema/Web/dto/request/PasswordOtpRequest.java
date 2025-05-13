@@ -10,6 +10,6 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PasswordOtpRequest {
-    @NotNull
+    @NotNull(message = "EMAIL_IS_NULL")
     String email;
 }

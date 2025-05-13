@@ -5,6 +5,7 @@ import com.cinemaweb.API.Cinema.Web.dto.response.ScheduleResponse;
 import com.cinemaweb.API.Cinema.Web.service.ScheduleService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,18 +27,21 @@ public class ScheduleController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public String createSchedule(@RequestBody @Valid ScheduleRequest scheduleCreate) {
         scheduleService.createSchedule(scheduleCreate);
         return "Creation schedule finish!";
     }
 
     @PutMapping("/{scheduleId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String updateSchedule(@RequestBody @Valid ScheduleRequest scheduleUpdate, @PathVariable String scheduleId) {
         scheduleService.updateSchedule(scheduleId,scheduleUpdate);
         return "Update schedule with id " + scheduleId + " finish!";
     }
 
     @DeleteMapping("/{scheduleId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteSchedule(@PathVariable String scheduleId) {
         scheduleService.deleteSchedule(scheduleId);
         return "delete schedule finish!";

@@ -1,8 +1,10 @@
 package com.cinemaweb.API.Cinema.Web.controller;
 
+import com.cinemaweb.API.Cinema.Web.dto.request.PointUpdateRequest;
 import com.cinemaweb.API.Cinema.Web.dto.request.UserCreationRequest;
 import com.cinemaweb.API.Cinema.Web.dto.request.UserUpdateRequest;
 import com.cinemaweb.API.Cinema.Web.dto.response.ApiResponse;
+import com.cinemaweb.API.Cinema.Web.dto.response.PointUpdateResponse;
 import com.cinemaweb.API.Cinema.Web.dto.response.UserResponse;
 import com.cinemaweb.API.Cinema.Web.service.UserService;
 import jakarta.validation.Valid;
@@ -49,7 +51,7 @@ public class UserController {
     @PostAuthorize("hasRole('ADMIN') || returnObject.body.username == authentication.name")
     public ApiResponse<UserResponse> get(@PathVariable("userId") String id) {
         return ApiResponse.<UserResponse>builder()
-                .body(userService.get(id))
+                .body(userService.getById(id))
                 .build();
     }
 
@@ -58,6 +60,14 @@ public class UserController {
     public ApiResponse<UserResponse> update(@RequestBody @Valid UserUpdateRequest request, @PathVariable("userId") String id) {
         return ApiResponse.<UserResponse>builder()
                 .body(userService.update(request, id))
+                .build();
+    }
+
+    @PostMapping("/update-point")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ApiResponse<PointUpdateResponse> updatePoint(@RequestBody PointUpdateRequest request) {
+        return ApiResponse.<PointUpdateResponse>builder()
+                .body(userService.updatePoint(request))
                 .build();
     }
 

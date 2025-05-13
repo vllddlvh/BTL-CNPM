@@ -28,7 +28,9 @@ public class User {
     LocalDate dateOfBirth;
     Integer gender;
     String avatar;
+    @Column(unique = true)
     String email;
+    @Column(unique = true)
     String phoneNumber;
     Double point;
 
@@ -40,4 +42,7 @@ public class User {
     )
     Set<Role> roles;
 
+    public void getBonus(double point) {
+        this.point += point;
+    }
 }
