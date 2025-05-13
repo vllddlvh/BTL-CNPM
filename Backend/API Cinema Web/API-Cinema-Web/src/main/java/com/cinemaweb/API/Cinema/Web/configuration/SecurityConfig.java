@@ -36,7 +36,8 @@ public class SecurityConfig {
     };
     private final String[] PUBLIC_ENDPOINTS_GET = {
             "/movies",
-            "/payment/create_payment"
+            "/payment/create_payment",
+            "payment/payment_info"
     };
 
 

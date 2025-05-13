@@ -2,11 +2,13 @@ package com.cinemaweb.API.Cinema.Web.controller;
 
 import com.cinemaweb.API.Cinema.Web.configuration.Config;
 import com.cinemaweb.API.Cinema.Web.dto.response.PaymentResponse;
+import com.cinemaweb.API.Cinema.Web.dto.response.TransactionStatus;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.UnsupportedEncodingException;
@@ -82,4 +84,21 @@ public class PaymentController {
         return ResponseEntity.status(HttpStatus.OK).body(paymentResponse);
     }
 
+    @GetMapping("/payment_info")
+    public ResponseEntity<?> transaction(@RequestParam(value = "vnp_Amount") String amount,
+                                         @RequestParam(value = "vnp_BankCode") String bankCode,
+                                         @RequestParam(value = "vnp_OrderInfo") String order,
+                                         @RequestParam(value = "vnp_ResponseCode") String responseCode) {
+        TransactionStatus transactionStatus = new TransactionStatus();
+        if(responseCode.equals("00")) {
+            transactionStatus.setStatus("OK");
+            transactionStatus.setMessage("Successfully");
+            transactionStatus.setData("");
+        } else {
+            transactionStatus.setStatus("NO");
+            transactionStatus.setMessage("Failed");
+            transactionStatus.setData("");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(transactionStatus);
+    }
 }
