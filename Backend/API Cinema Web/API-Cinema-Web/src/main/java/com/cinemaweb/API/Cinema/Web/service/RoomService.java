@@ -42,6 +42,7 @@ public class RoomService {
         List<Seat> seats = new ArrayList<>();
         int numRows = roomCreateRequest.getNumRow();
         int numCols = roomCreateRequest.getNumCol();
+        double[] seatPrice = roomCreateRequest.getSeatPrice();
         Room room = roomMapper.toCreateRoom(roomCreateRequest);
 
         roomRepository.save(room);
@@ -58,18 +59,13 @@ public class RoomService {
                         .build();
                 if(row == numRows) {
                     seat.setSeatType("Couple");
-                    seat.setSeatPrice(250000);
+                    seat.setSeatPrice(seatPrice[0]);
                 } else if(row <= 3) {
-                    seat.setSeatType("Head");
-                    seat.setSeatPrice(100000);
-                } else if(row <= numRows - 3 &&
-                        col >= numCols/4 &&
-                        col <= numCols - numCols/4) {
-                    seat.setSeatType("Center");
-                    seat.setSeatPrice(140000);
+                    seat.setSeatType("Normal");
+                    seat.setSeatPrice(seatPrice[1]);
                 } else {
-                    seat.setSeatType("Tails");
-                    seat.setSeatPrice(120000);
+                    seat.setSeatType("VIP");
+                    seat.setSeatPrice(seatPrice[2]);
                 }
                 seats.add(seat);
             }
