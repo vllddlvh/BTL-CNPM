@@ -19,7 +19,7 @@ import javax.crypto.spec.SecretKeySpec;
  *
  * @author CTT VNPAY
  */
-public class Config {
+public class ConfigPayment {
 
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
     public static String vnp_ReturnUrl = "http://localhost:8080/api/payment/payment_info";

@@ -1,6 +1,6 @@
 package com.cinemaweb.API.Cinema.Web.controller;
 
-import com.cinemaweb.API.Cinema.Web.configuration.Config;
+import com.cinemaweb.API.Cinema.Web.configuration.ConfigPayment;
 import com.cinemaweb.API.Cinema.Web.dto.response.PaymentResponse;
 import com.cinemaweb.API.Cinema.Web.dto.response.TransactionStatus;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,13 +23,13 @@ public class PaymentController {
     @GetMapping("/create_payment")
     public ResponseEntity<?> createPayment(HttpServletRequest request) throws UnsupportedEncodingException {
         long amount = 10000 * 100;
-        String vnp_TxnRef = Config.getRandomNumber(8);
-        String vnp_IpAddr = Config.getIpAddress(request);
-        String vnp_TmnCode = Config.vnp_TmnCode;
+        String vnp_TxnRef = ConfigPayment.getRandomNumber(8);
+        String vnp_IpAddr = ConfigPayment.getIpAddress(request);
+        String vnp_TmnCode = ConfigPayment.vnp_TmnCode;
 
         Map<String, String> vnp_Params = new HashMap<>();
-        vnp_Params.put("vnp_Version", Config.vnp_Version);
-        vnp_Params.put("vnp_Command", Config.vnp_Command);
+        vnp_Params.put("vnp_Version", ConfigPayment.vnp_Version);
+        vnp_Params.put("vnp_Command", ConfigPayment.vnp_Command);
         vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
         vnp_Params.put("vnp_Amount", String.valueOf(amount));
         vnp_Params.put("vnp_CurrCode", "VND");
@@ -40,7 +40,7 @@ public class PaymentController {
         vnp_Params.put("vnp_OrderInfo", "Thanh toan don hang: " + vnp_TxnRef);
         vnp_Params.put("vnp_OrderType", "other"); // hoặc "billpayment", "topup", ...
 
-        vnp_Params.put("vnp_ReturnUrl", Config.vnp_ReturnUrl);
+        vnp_Params.put("vnp_ReturnUrl", ConfigPayment.vnp_ReturnUrl);
         vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
 
         Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
@@ -72,9 +72,9 @@ public class PaymentController {
             }
         }
 
-        String vnp_SecureHash = Config.hmacSHA512(Config.secretKey, hashData.toString());
+        String vnp_SecureHash = ConfigPayment.hmacSHA512(ConfigPayment.secretKey, hashData.toString());
         query.append("&vnp_SecureHash=").append(vnp_SecureHash);
-        String paymentUrl = Config.vnp_PayUrl + "?" + query;
+        String paymentUrl = ConfigPayment.vnp_PayUrl + "?" + query;
 
         PaymentResponse paymentResponse = new PaymentResponse();
         paymentResponse.setStatus("OK");

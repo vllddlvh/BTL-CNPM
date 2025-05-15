@@ -35,9 +35,15 @@ public class SecurityConfig {
             "/auth/reset-password/**"
     };
     private final String[] PUBLIC_ENDPOINTS_GET = {
-            "/movies",
-            "/payment/create_payment",
-            "payment/payment_info"
+            "/payment/create_payment",  //test
+            "payment/payment_info",     //test
+            "booking/{bookingId}",
+            "cinemas",
+            "cinemas/{cinemaId}",
+            "movies",
+            "movies/movieId",
+            "schedule",
+            "schedule/{scheduleId}"
     };
 
 

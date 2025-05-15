@@ -54,6 +54,7 @@ public class RoomService {
                         .room(room)
                         .seatType("")
                         .seatRow(alphabetRow)
+                        .seatNumber(col)
                         .seatPrice(100000)
                         .seatState(false)
                         .build();
