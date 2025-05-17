@@ -11,24 +11,23 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "bookingfoodanddrink")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "foodanddrink")
-public class FoodAndDrink {
-    @Column(name = "fd_id")
+public class BookingFoodAndDrink {
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    int foodAndDrinkId;
-
-    @Column(name = "fd_name")
-    String foodAndDrinkName;
+    int bookingFoodAndDrinkId;
 
     @ManyToOne
-    @JoinColumn(name = "cinema_id")
-    Cinema cinema;
+    @JoinColumn(name = "booking_id")
+    Booking booking;
 
-    @Column(name = "fd_price")
-    double foodAndDrinkPrice;
+    @ManyToOne
+    @JoinColumn(name = "fd_id")
+    FoodAndDrink foodAndDrink;
 
-    @Column(name = "image_food_and_drink")
-    String imageFoodAndDrink;
+    int quantity;
+
+    double price; // Tổng giá món này (giá * số lượng)
 }

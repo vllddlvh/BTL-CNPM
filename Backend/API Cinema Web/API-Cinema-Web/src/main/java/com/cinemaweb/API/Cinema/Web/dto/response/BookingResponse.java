@@ -1,11 +1,13 @@
 package com.cinemaweb.API.Cinema.Web.dto.response;
 
 
+import com.cinemaweb.API.Cinema.Web.entity.BookingFoodAndDrink;
 import jakarta.persistence.Entity;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -21,7 +23,7 @@ public class BookingResponse {
     String seatRow;
     int seatNumber;
     String username;
-    String foodAndDrinkName;
+    List<BookingFoodAndDrink> foodAndDrinks;
     Double price;
     LocalDateTime bookingDay;
 }

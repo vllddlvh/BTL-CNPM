@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static java.time.LocalDateTime.now;
@@ -32,10 +33,9 @@ public class Booking {
     @JoinColumn(name = "user_id")
     User user;
 
-    @ManyToOne
-    @JoinColumn(name = "fd_id")
-    FoodAndDrink foodAndDrink;
-
     double price;
     LocalDateTime bookingDay;
+
+    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<BookingFoodAndDrink> foodAndDrinks;
 }

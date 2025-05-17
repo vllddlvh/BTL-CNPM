@@ -14,6 +14,7 @@ public class SeatResponse {
     String roomName;
     String seatType;
     String seatRow;
+    boolean seatState; // 0 is not sold, 1 is sold
     int seatNumber;
     double seatPrice;
 }

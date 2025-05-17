@@ -15,12 +15,10 @@ public interface BookingMapper {
     @Mapping(source = "seat.seatRow",target = "seatRow")
     @Mapping(source = "seat.seatType",target = "seatType")
     @Mapping(source = "user.username",target = "username")
-    @Mapping(source = "foodAndDrink.foodAndDrinkName",target = "foodAndDrinkName")
     BookingResponse toBookingResponse(Booking booking);
 
     @Mapping(source = "scheduleId", target = "schedule.scheduleId")
     @Mapping(source = "seatId", target = "seat.seatId")
     @Mapping(source = "userId", target = "user.ID")
-    @Mapping(source = "foodAndDrinkId", target = "foodAndDrink.foodAndDrinkId")
     Booking toCreationBooking(BookingRequest bookingRequest);
 }
