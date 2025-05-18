@@ -35,7 +35,4 @@ public class Booking {
 
     double price;
     LocalDateTime bookingDay;
-
-    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<BookingFoodAndDrink> foodAndDrinks;
 }

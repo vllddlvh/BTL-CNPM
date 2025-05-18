@@ -23,7 +23,7 @@ public class BookingResponse {
     String seatRow;
     int seatNumber;
     String username;
-    List<BookingFoodAndDrink> foodAndDrinks;
+    List<BookingFoodAndDrinkResponse> foodAndDrinks;
     Double price;
     LocalDateTime bookingDay;
 }

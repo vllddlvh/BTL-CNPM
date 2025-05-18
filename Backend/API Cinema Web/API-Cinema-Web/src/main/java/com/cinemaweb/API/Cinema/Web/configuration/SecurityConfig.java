@@ -32,18 +32,21 @@ public class SecurityConfig {
             "/auth/logout",
             "/auth/refresh-Token",
             "/auth/forget-password",
-            "/auth/reset-password/**"
+            "/auth/reset-password/**",
+            "/bookingFoodAndDrink"
     };
     private final String[] PUBLIC_ENDPOINTS_GET = {
             "/payment/create_payment",  //test
-            "payment/payment_info",     //test
-            "booking/{bookingId}",
-            "cinemas",
-            "cinemas/{cinemaId}",
-            "movies",
-            "movies/movieId",
-            "schedule",
-            "schedule/{scheduleId}"
+            "/payment/payment_info",     //test
+            "/booking/{bookingId}",
+            "/cinemas",
+            "/cinemas/{cinemaId}",
+            "/movies",
+            "/movies/movieId",
+            "/schedule",
+            "/schedule/{scheduleId}",
+            "/bookingFoodAndDrink",
+            "/bookingFoodAndDrink/{bookingFoodAndDrinkId}"
     };
 
 

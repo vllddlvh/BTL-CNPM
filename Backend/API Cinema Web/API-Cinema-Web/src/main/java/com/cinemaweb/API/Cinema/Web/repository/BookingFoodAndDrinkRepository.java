@@ -8,5 +8,5 @@ import java.util.List;
 public interface BookingFoodAndDrinkRepository extends JpaRepository<BookingFoodAndDrink, String> {
     List<BookingFoodAndDrink> findByBooking_BookingId(int bookingId);
 
-    boolean existsByBookingId(int bookingId);
+    boolean existsByBooking_BookingId(int bookingId);
 }

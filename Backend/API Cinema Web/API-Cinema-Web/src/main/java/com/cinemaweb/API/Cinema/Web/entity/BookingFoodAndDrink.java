@@ -15,6 +15,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookingFoodAndDrink {
 
+    @Column(name = "booking_fd_id")
     @Id
     @GeneratedValue(strategy = IDENTITY)
     int bookingFoodAndDrinkId;
