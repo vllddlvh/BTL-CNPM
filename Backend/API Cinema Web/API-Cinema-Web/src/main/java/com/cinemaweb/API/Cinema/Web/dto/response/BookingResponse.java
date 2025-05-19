@@ -19,9 +19,7 @@ public class BookingResponse {
     String roomName;
     String cinemaName;
     String movieName;
-    String seatType;
-    String seatRow;
-    int seatNumber;
+    List<BookingSeatResponse> seats;
     String username;
     List<BookingFoodAndDrinkResponse> foodAndDrinks;
     Double price;

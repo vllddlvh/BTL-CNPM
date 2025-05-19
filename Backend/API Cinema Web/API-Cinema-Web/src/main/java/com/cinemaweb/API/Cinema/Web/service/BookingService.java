@@ -3,11 +3,14 @@ package com.cinemaweb.API.Cinema.Web.service;
 import com.cinemaweb.API.Cinema.Web.dto.request.BookingRequest;
 import com.cinemaweb.API.Cinema.Web.dto.response.BookingFoodAndDrinkResponse;
 import com.cinemaweb.API.Cinema.Web.dto.response.BookingResponse;
+import com.cinemaweb.API.Cinema.Web.dto.response.SeatResponse;
 import com.cinemaweb.API.Cinema.Web.entity.Booking;
 import com.cinemaweb.API.Cinema.Web.entity.BookingFoodAndDrink;
+import com.cinemaweb.API.Cinema.Web.entity.BookingSeat;
 import com.cinemaweb.API.Cinema.Web.entity.Seat;
 import com.cinemaweb.API.Cinema.Web.mapper.BookingFoodAndDrinkMapper;
 import com.cinemaweb.API.Cinema.Web.mapper.BookingMapper;
+import com.cinemaweb.API.Cinema.Web.mapper.BookingSeatMapper;
 import com.cinemaweb.API.Cinema.Web.repository.BookingFoodAndDrinkRepository;
 import com.cinemaweb.API.Cinema.Web.repository.BookingRepository;
 import com.cinemaweb.API.Cinema.Web.repository.BookingSeatRepository;
@@ -38,6 +41,9 @@ public class BookingService {
     @Autowired
     private BookingFoodAndDrinkMapper bookingFoodAndDrinkMapper;
 
+    @Autowired
+    private BookingSeatMapper bookingSeatMapper;
+
     public BookingResponse getBooking(String bookingId) {
         int bookingIdInt = Integer.parseInt(bookingId);
         List<BookingFoodAndDrinkResponse> listBookingFoodAndDrinks = null;
@@ -47,15 +53,25 @@ public class BookingService {
         }
         BookingResponse booking = bookingMapper.toBookingResponse(bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new RuntimeException("Booking id is not found")));
-
+        // Lấy về các seat của booking
+        List<BookingSeat> seats = bookingSeatRepository.findAllByBooking_BookingId(bookingIdInt)
+                .orElseThrow(() -> new RuntimeException("Invalid seats"));
         booking.setFoodAndDrinks(listBookingFoodAndDrinks);
+        booking.setSeats(seats.stream().map(bookingSeatMapper::toBookingSeatResponse).toList());
         return booking;
     }
 
     public void createBooking(BookingRequest bookingRequest) {
         Booking booking = bookingMapper.toCreationBooking(bookingRequest);
-        double seatPrice = seatRepository.findById(Integer.toString(booking.getSeat().getSeatId()))
-                .orElseThrow(() -> new RuntimeException("Seat in booking is not found")).getSeatPrice();
+
+        // Tinh tien seat
+        
+        double seatPrice = 0;
+        List<BookingSeat> bookingSeats = bookingSeatRepository.findAllByBooking_BookingId(booking.getBookingId())
+                .orElseThrow(() -> new RuntimeException("Invalid booking seat"));
+        for (BookingSeat bookingSeat : bookingSeats) {
+            seatPrice += bookingSeat.getPrice();
+        }
 
         double foodAndDrinksPrice = 0;
         if(bookingFoodAndDrinkRepository.existsByBooking_BookingId(booking.getBookingId())) {

@@ -1,6 +1,7 @@
 package com.cinemaweb.API.Cinema.Web.dto.request;
 
 import com.cinemaweb.API.Cinema.Web.entity.BookingFoodAndDrink;
+import com.cinemaweb.API.Cinema.Web.entity.BookingSeat;
 import jakarta.persistence.Entity;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -17,7 +18,7 @@ import static java.time.LocalDateTime.now;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookingRequest {
     int scheduleId;
-    int seatId;
+    List<BookingSeat> seats;
     String userId;
     List<BookingFoodAndDrink> foodAndDrinks;
     LocalDateTime bookingDay = LocalDateTime.now();

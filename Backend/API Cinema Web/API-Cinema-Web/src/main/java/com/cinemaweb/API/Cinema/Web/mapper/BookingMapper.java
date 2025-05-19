@@ -11,9 +11,6 @@ public interface BookingMapper {
     @Mapping(source = "schedule.movie.movieName",target = "movieName")
     @Mapping(source = "schedule.room.roomName",target = "roomName")
     @Mapping(source = "schedule.cinema.cinemaName",target = "cinemaName")
-    @Mapping(source = "seat.seatNumber",target = "seatNumber")
-    @Mapping(source = "seat.seatRow",target = "seatRow")
-    @Mapping(source = "seat.seatType",target = "seatType")
     @Mapping(source = "user.username",target = "username")
     BookingResponse toBookingResponse(Booking booking);
 
