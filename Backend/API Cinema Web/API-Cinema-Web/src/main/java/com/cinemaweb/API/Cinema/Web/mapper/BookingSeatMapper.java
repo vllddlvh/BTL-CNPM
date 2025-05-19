@@ -9,11 +9,11 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface BookingSeatMapper {
     @Mapping(source = "booking.bookingId", target = "bookingId")
-    @Mapping(source = "seat.seatId", target = "seatId")
+    @Mapping(source = "seatSchedule.seatScheduleId", target = "seatScheduleId")
     BookingSeatResponse toBookingSeatResponse(BookingSeat bookingSeat);
 
 
-    @Mapping(source = "seatId", target = "seat.seatId")
+    @Mapping(source = "seatScheduleId", target = "seatSchedule.seatScheduleId")
     @Mapping(source = "bookingId", target = "booking.bookingId")
     BookingSeat toBookingSeat(BookingSeatRequest request);
 }

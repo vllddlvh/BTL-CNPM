@@ -2,20 +2,16 @@ package com.cinemaweb.API.Cinema.Web.service;
 
 import com.cinemaweb.API.Cinema.Web.dto.request.ScheduleRequest;
 import com.cinemaweb.API.Cinema.Web.dto.response.ScheduleResponse;
-import com.cinemaweb.API.Cinema.Web.entity.Cinema;
-import com.cinemaweb.API.Cinema.Web.entity.Movie;
-import com.cinemaweb.API.Cinema.Web.entity.Room;
-import com.cinemaweb.API.Cinema.Web.entity.Schedule;
+import com.cinemaweb.API.Cinema.Web.entity.*;
 import com.cinemaweb.API.Cinema.Web.mapper.ScheduleMapper;
-import com.cinemaweb.API.Cinema.Web.repository.CinemaRepository;
-import com.cinemaweb.API.Cinema.Web.repository.MovieRepository;
-import com.cinemaweb.API.Cinema.Web.repository.RoomRepository;
-import com.cinemaweb.API.Cinema.Web.repository.ScheduleRepository;
+import com.cinemaweb.API.Cinema.Web.mapper.SeatScheduleMapper;
+import com.cinemaweb.API.Cinema.Web.repository.*;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -36,6 +32,15 @@ public class ScheduleService {
     @Autowired
     MovieRepository movieRepository;
 
+    @Autowired
+    SeatScheduleRepository seatScheduleRepository;
+
+    @Autowired
+    SeatScheduleMapper seatScheduleMapper;
+
+    @Autowired
+    SeatRepository seatRepository;
+
     public List<ScheduleResponse> getAllSchedule() {
         return scheduleMapper.toScheduleResponseList(scheduleRepository.findAll());
     }
@@ -48,6 +53,21 @@ public class ScheduleService {
     public void createSchedule(ScheduleRequest scheduleCreateRequest) {
         Schedule schedule = scheduleMapper.toCreateSchedule(scheduleCreateRequest);
         scheduleRepository.save(schedule);
+
+        int roomId = schedule.getRoom().getRoomId();
+        int scheduleId = schedule.getScheduleId();
+        //Create SeatSchedule
+        List<Seat> seats = seatRepository.findByRoom_RoomId(roomId);
+        List<SeatSchedule> seatSchedules = new ArrayList<>();
+        for(int i = 0; i < seats.size(); i++) {
+            SeatSchedule seatSchedule = SeatSchedule.builder()
+                    .schedule(schedule)
+                    .seat(seats.get(i))
+                    .seatState(false)
+                    .build();
+            seatSchedules.add(seatSchedule);
+        }
+        seatScheduleRepository.saveAll(seatSchedules);
     }
 
     public void updateSchedule(String scheduleId, ScheduleRequest scheduleUpdateRequest) {

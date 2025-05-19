@@ -25,10 +25,6 @@ public class Booking {
     @JoinColumn(name = "schedule_id")
     Schedule schedule;
 
-    @ManyToOne
-    @JoinColumn(name = "seat_id")
-    Seat seat;
-
     @OneToOne
     @JoinColumn(name = "user_id")
     User user;

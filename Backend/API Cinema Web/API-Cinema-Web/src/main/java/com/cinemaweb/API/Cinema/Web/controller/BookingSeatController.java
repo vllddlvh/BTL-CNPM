@@ -20,28 +20,16 @@ public class BookingSeatController {
     BookingSeatService bookingSeatService;
 
     @GetMapping("/{bookingSeatId}")
-    public ApiResponse<BookingSeatResponse> get(@PathVariable("bookingSeatId") int id)  {
+    public ApiResponse<BookingSeatResponse> getBookingSeat(@PathVariable("bookingSeatId") int id)  {
         return ApiResponse.<BookingSeatResponse>builder()
                 .body(bookingSeatService.get(id))
                 .build();
     }
 
-    @GetMapping
-    public ApiResponse<List<BookingSeatResponse>> getAll() {
-        return ApiResponse.<List<BookingSeatResponse>>builder()
-                .body(bookingSeatService.getAll())
-                .build();
-    }
-
     @PostMapping
-    public ApiResponse<BookingSeatResponse> create(@RequestBody BookingSeatRequest request) {
+    public ApiResponse<BookingSeatResponse> createBookingSeat(@RequestBody BookingSeatRequest request) {
         return ApiResponse.<BookingSeatResponse>builder()
                 .body(bookingSeatService.create(request))
                 .build();
-    }
-
-    @DeleteMapping("/{bookingSeatId}")
-    public ApiResponse<Void> delete(@PathVariable("bookingSeatId") int id) {
-        return new ApiResponse<>();
     }
 }

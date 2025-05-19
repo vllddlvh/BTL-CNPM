@@ -27,7 +27,6 @@ public class ScheduleController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
     public String createSchedule(@RequestBody @Valid ScheduleRequest scheduleCreate) {
         scheduleService.createSchedule(scheduleCreate);
         return "Creation schedule finish!";

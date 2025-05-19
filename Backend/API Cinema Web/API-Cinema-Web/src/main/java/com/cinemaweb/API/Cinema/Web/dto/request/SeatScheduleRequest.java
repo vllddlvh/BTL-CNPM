@@ -1,4 +1,4 @@
-package com.cinemaweb.API.Cinema.Web.dto.response;
+package com.cinemaweb.API.Cinema.Web.dto.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -8,9 +8,7 @@ import lombok.experimental.FieldDefaults;
 @Data
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class BookingSeatResponse {
-    int id;
-    int bookingId;
-    int seatScheduleId;
-    double price;
+public class SeatScheduleRequest {
+    int scheduleId;
+    int seatId;
 }

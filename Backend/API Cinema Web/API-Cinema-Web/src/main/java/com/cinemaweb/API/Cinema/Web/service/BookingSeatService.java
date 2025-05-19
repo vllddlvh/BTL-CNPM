@@ -5,9 +5,11 @@ import com.cinemaweb.API.Cinema.Web.dto.request.BookingSeatRequest;
 import com.cinemaweb.API.Cinema.Web.dto.response.BookingSeatResponse;
 import com.cinemaweb.API.Cinema.Web.entity.BookingSeat;
 import com.cinemaweb.API.Cinema.Web.entity.Seat;
+import com.cinemaweb.API.Cinema.Web.entity.SeatSchedule;
 import com.cinemaweb.API.Cinema.Web.mapper.BookingSeatMapper;
 import com.cinemaweb.API.Cinema.Web.repository.BookingSeatRepository;
 import com.cinemaweb.API.Cinema.Web.repository.SeatRepository;
+import com.cinemaweb.API.Cinema.Web.repository.SeatScheduleRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -23,7 +25,7 @@ import java.util.List;
 public class BookingSeatService {
     BookingSeatRepository bookingSeatRepository;
     BookingSeatMapper bookingSeatMapper;
-    SeatRepository seatRepository;
+    SeatScheduleRepository seatScheduleRepository;
 
     public BookingSeatResponse get(int id) {
         return bookingSeatMapper.toBookingSeatResponse(bookingSeatRepository.findById(id)
@@ -38,13 +40,9 @@ public class BookingSeatService {
 
     public BookingSeatResponse create(BookingSeatRequest request) {
         BookingSeat bookingSeat = bookingSeatMapper.toBookingSeat(request);
-        Seat seat = seatRepository.findById(Integer.toString(request.getSeatId()))
+        SeatSchedule seatSchedule = seatScheduleRepository.findById(Integer.toString(request.getSeatScheduleId()))
                 .orElseThrow(() -> new RuntimeException("Invalid seat!"));
-        bookingSeat.setPrice(seat.getSeatPrice());
+        bookingSeat.setPrice(seatSchedule.getSeat().getSeatPrice());
         return  bookingSeatMapper.toBookingSeatResponse(bookingSeatRepository.save(bookingSeat));
-    }
-
-    public void delete(int id) {
-        bookingSeatRepository.deleteById(id);
     }
 }

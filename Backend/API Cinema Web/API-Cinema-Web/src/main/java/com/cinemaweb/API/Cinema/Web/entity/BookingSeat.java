@@ -24,9 +24,8 @@ public class BookingSeat {
     Booking booking;
 
     @ManyToOne
-    @JoinColumn(name = "seat_id")
-    Seat seat;
+    @JoinColumn(name = "seat_schedule_id")
+    SeatSchedule seatSchedule;
 
     double price;
-
 }

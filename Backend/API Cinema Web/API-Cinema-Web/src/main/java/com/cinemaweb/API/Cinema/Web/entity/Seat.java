@@ -27,5 +27,4 @@ public class Seat {
     char seatRow;
     int seatNumber;
     double seatPrice;
-    boolean seatState; // 0 is not sold, 1 is sold
 }

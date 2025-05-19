@@ -56,7 +56,6 @@ public class RoomService {
                         .seatRow(alphabetRow)
                         .seatNumber(col)
                         .seatPrice(100000)
-                        .seatState(false)
                         .build();
                 if(row == numRows) {
                     seat.setSeatType("Couple");

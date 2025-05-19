@@ -33,7 +33,8 @@ public class SecurityConfig {
             "/auth/refresh-Token",
             "/auth/forget-password",
             "/auth/reset-password/**",
-            "/bookingFoodAndDrink"
+            "/bookingFoodAndDrink",
+            "/schedule"
     };
     private final String[] PUBLIC_ENDPOINTS_GET = {
             "/payment/create_payment",  //test
@@ -46,7 +47,8 @@ public class SecurityConfig {
             "/schedule",
             "/schedule/{scheduleId}",
             "/bookingFoodAndDrink",
-            "/bookingFoodAndDrink/{bookingFoodAndDrinkId}"
+            "/bookingFoodAndDrink/{bookingFoodAndDrinkId}",
+            "/seatSchedule"
     };
 
 

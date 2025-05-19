@@ -14,6 +14,4 @@ public class SeatRequest {
     String seatRow;
     int seatNumber;
     double seatPrice;
-
-    boolean seatState = false; // 0 is not sold, 1 is sold
 }

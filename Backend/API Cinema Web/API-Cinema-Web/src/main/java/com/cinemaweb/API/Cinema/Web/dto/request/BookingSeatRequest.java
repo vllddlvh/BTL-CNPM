@@ -10,6 +10,5 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookingSeatRequest {
     int bookingId;
-    int seatId;
-
+    int seatScheduleId;
 }
