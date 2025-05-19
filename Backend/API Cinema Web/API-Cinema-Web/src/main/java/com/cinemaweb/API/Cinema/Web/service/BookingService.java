@@ -5,10 +5,12 @@ import com.cinemaweb.API.Cinema.Web.dto.response.BookingFoodAndDrinkResponse;
 import com.cinemaweb.API.Cinema.Web.dto.response.BookingResponse;
 import com.cinemaweb.API.Cinema.Web.entity.Booking;
 import com.cinemaweb.API.Cinema.Web.entity.BookingFoodAndDrink;
+import com.cinemaweb.API.Cinema.Web.entity.Seat;
 import com.cinemaweb.API.Cinema.Web.mapper.BookingFoodAndDrinkMapper;
 import com.cinemaweb.API.Cinema.Web.mapper.BookingMapper;
 import com.cinemaweb.API.Cinema.Web.repository.BookingFoodAndDrinkRepository;
 import com.cinemaweb.API.Cinema.Web.repository.BookingRepository;
+import com.cinemaweb.API.Cinema.Web.repository.BookingSeatRepository;
 import com.cinemaweb.API.Cinema.Web.repository.SeatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,9 @@ public class BookingService {
     private SeatRepository seatRepository;
 
     @Autowired
+    private BookingSeatRepository bookingSeatRepository;
+
+    @Autowired
     private BookingFoodAndDrinkRepository bookingFoodAndDrinkRepository;
 
     @Autowired
@@ -42,6 +47,7 @@ public class BookingService {
         }
         BookingResponse booking = bookingMapper.toBookingResponse(bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new RuntimeException("Booking id is not found")));
+
         booking.setFoodAndDrinks(listBookingFoodAndDrinks);
         return booking;
     }
@@ -56,7 +62,7 @@ public class BookingService {
             List<BookingFoodAndDrink> listBookingFoodAndDrink = bookingFoodAndDrinkRepository.
                     findByBooking_BookingId(booking.getBookingId());
 
-            for(int i = 0; i < listBookingFoodAndDrink.size(); i++ ) {
+            for (int i = 0; i < listBookingFoodAndDrink.size(); i++ ) {
                 foodAndDrinksPrice += listBookingFoodAndDrink.get(i).getPrice();
             }
         }
