@@ -4,21 +4,16 @@ import com.cinemaweb.API.Cinema.Web.dto.request.BookingRequest;
 import com.cinemaweb.API.Cinema.Web.dto.response.BookingFoodAndDrinkResponse;
 import com.cinemaweb.API.Cinema.Web.dto.response.BookingResponse;
 import com.cinemaweb.API.Cinema.Web.dto.response.SeatResponse;
-import com.cinemaweb.API.Cinema.Web.entity.Booking;
-import com.cinemaweb.API.Cinema.Web.entity.BookingFoodAndDrink;
-import com.cinemaweb.API.Cinema.Web.entity.BookingSeat;
-import com.cinemaweb.API.Cinema.Web.entity.Seat;
+import com.cinemaweb.API.Cinema.Web.entity.*;
 import com.cinemaweb.API.Cinema.Web.mapper.BookingFoodAndDrinkMapper;
 import com.cinemaweb.API.Cinema.Web.mapper.BookingMapper;
 import com.cinemaweb.API.Cinema.Web.mapper.BookingSeatMapper;
-import com.cinemaweb.API.Cinema.Web.repository.BookingFoodAndDrinkRepository;
-import com.cinemaweb.API.Cinema.Web.repository.BookingRepository;
-import com.cinemaweb.API.Cinema.Web.repository.BookingSeatRepository;
-import com.cinemaweb.API.Cinema.Web.repository.SeatRepository;
+import com.cinemaweb.API.Cinema.Web.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,6 +38,9 @@ public class BookingService {
 
     @Autowired
     private BookingSeatMapper bookingSeatMapper;
+
+    @Autowired
+    private SeatScheduleRepository seatScheduleRepository;
 
     public BookingResponse getBooking(String bookingId) {
         int bookingIdInt = Integer.parseInt(bookingId);
@@ -69,9 +67,14 @@ public class BookingService {
         double seatPrice = 0;
         List<BookingSeat> bookingSeats = bookingSeatRepository.findAllByBooking_BookingId(booking.getBookingId())
                 .orElseThrow(() -> new RuntimeException("Invalid booking seat"));
-        for (BookingSeat bookingSeat : bookingSeats) {
-            seatPrice += bookingSeat.getPrice();
+        List<SeatSchedule> seatSchedules = new ArrayList<>();
+        for (int i = 0; i < bookingSeats.size(); i++) {
+            seatPrice += bookingSeats.get(i).getPrice();
+            SeatSchedule seatSchedule =  bookingSeats.get(i).getSeatSchedule();
+            seatSchedule.setSeatState(true);
+            seatSchedules.add(seatSchedule);
         }
+        seatScheduleRepository.saveAll(seatSchedules);
 
         double foodAndDrinksPrice = 0;
         if(bookingFoodAndDrinkRepository.existsByBooking_BookingId(booking.getBookingId())) {
