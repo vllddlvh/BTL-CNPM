@@ -51,10 +51,11 @@ public class UserService {
         return users.stream().map(userMapper::toUserResponse).toList();
     }
 
+    // Chinh sua
     public UserResponse getMyInfo() {
         var context = SecurityContextHolder.getContext();
-        String name = context.getAuthentication().getName();
-        User user = userRepository.findByUsername(name).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTS));
+        String id = context.getAuthentication().getName();
+        User user = userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTS));
         return userMapper.toUserResponse(user);
     }
 
