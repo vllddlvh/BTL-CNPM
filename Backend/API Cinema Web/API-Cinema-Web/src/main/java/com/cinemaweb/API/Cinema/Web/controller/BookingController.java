@@ -20,7 +20,6 @@ public class BookingController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
     public String createBooking(@RequestBody @Valid BookingRequest bookingRequest) {
         bookingService.createBooking(bookingRequest);
         return "Creation booking finished";

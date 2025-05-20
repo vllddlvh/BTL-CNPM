@@ -35,7 +35,8 @@ public class SecurityConfig {
             "/auth/reset-password/**",
             "/bookingFoodAndDrink",
             "/schedule",
-            "foodanddrink"
+            "foodanddrink",
+            "/booking"
     };
     private final String[] PUBLIC_ENDPOINTS_GET = {
             "/payment/create_payment",  //test
