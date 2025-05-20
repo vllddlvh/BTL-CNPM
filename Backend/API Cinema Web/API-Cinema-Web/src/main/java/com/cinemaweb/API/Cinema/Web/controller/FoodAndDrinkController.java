@@ -27,7 +27,6 @@ public class FoodAndDrinkController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
     public String createFoodAndDrink(@RequestBody @Valid FoodAndDrinkRequest fdCreateRequest) {
         foodAndDrinkService.createFoodAndDrink(fdCreateRequest);
         return "Creation fd finish";

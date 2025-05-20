@@ -12,4 +12,5 @@ public class FoodAndDrinkRequest {
     String foodAndDrinkName;
     String cinemaId;
     double foodAndDrinkPrice;
+    String imageFoodAndDrink;
 }
