@@ -19,7 +19,6 @@ import static java.time.LocalDateTime.now;
 public class BookingRequest {
     int scheduleId;
     List<BookingSeat> seats;
-    String userId;
     List<BookingFoodAndDrink> foodAndDrinks;
     LocalDateTime bookingDay = LocalDateTime.now();
 }

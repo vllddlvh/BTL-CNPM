@@ -5,11 +5,14 @@ import com.cinemaweb.API.Cinema.Web.dto.response.BookingFoodAndDrinkResponse;
 import com.cinemaweb.API.Cinema.Web.dto.response.BookingResponse;
 import com.cinemaweb.API.Cinema.Web.dto.response.SeatResponse;
 import com.cinemaweb.API.Cinema.Web.entity.*;
+import com.cinemaweb.API.Cinema.Web.exception.AppException;
+import com.cinemaweb.API.Cinema.Web.exception.ErrorCode;
 import com.cinemaweb.API.Cinema.Web.mapper.BookingFoodAndDrinkMapper;
 import com.cinemaweb.API.Cinema.Web.mapper.BookingMapper;
 import com.cinemaweb.API.Cinema.Web.mapper.BookingSeatMapper;
 import com.cinemaweb.API.Cinema.Web.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -39,6 +42,9 @@ public class BookingService {
     @Autowired
     private SeatScheduleRepository seatScheduleRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public BookingResponse getBooking(String bookingId) {
         int bookingIdInt = Integer.parseInt(bookingId);
         List<BookingFoodAndDrinkResponse> listBookingFoodAndDrinks = null;
@@ -58,7 +64,10 @@ public class BookingService {
 
     public void createBooking(BookingRequest bookingRequest) {
         Booking booking = bookingMapper.toCreationBooking(bookingRequest);
-
+        var context = SecurityContextHolder.getContext();
+        String id = context.getAuthentication().getName();
+        User user = userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTS));
+        booking.setUser(user);
         // Tinh tien seat
         
         double seatPrice = 0;
