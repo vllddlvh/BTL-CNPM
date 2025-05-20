@@ -28,9 +28,5 @@ public interface SeatScheduleMapper {
 
     @Mapping(source = "scheduleId", target = "schedule.scheduleId")
     @Mapping(source = "seatId", target = "seat.seatId")
-    @Mapping(source = "seatType", target = "seat.seatType")
-    @Mapping(source = "seatRow", target = "seat.seatRow")
-    @Mapping(source = "seatNumber", target = "seat.seatNumber")
-    @Mapping(source = "seatPrice", target = "seat.seatPrice")
     SeatSchedule toCreateSeatSchedule(SeatScheduleRequest seatScheduleCreateRequest);
 }
