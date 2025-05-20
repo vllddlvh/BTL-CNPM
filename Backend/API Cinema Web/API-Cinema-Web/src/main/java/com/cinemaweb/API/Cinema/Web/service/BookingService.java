@@ -25,9 +25,6 @@ public class BookingService {
     private BookingMapper bookingMapper;
 
     @Autowired
-    private SeatRepository seatRepository;
-
-    @Autowired
     private BookingSeatRepository bookingSeatRepository;
 
     @Autowired
@@ -75,6 +72,7 @@ public class BookingService {
             seatSchedules.add(seatSchedule);
         }
         seatScheduleRepository.saveAll(seatSchedules);
+        bookingSeatRepository.saveAll(bookingSeats);
 
         double foodAndDrinksPrice = 0;
         if(bookingFoodAndDrinkRepository.existsByBooking_BookingId(booking.getBookingId())) {
