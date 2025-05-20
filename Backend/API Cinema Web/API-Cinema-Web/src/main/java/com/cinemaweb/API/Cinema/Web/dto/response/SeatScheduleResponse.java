@@ -14,5 +14,9 @@ public class SeatScheduleResponse {
     int seatScheduleId;
     int scheduleId;
     int seatId;
+    String seatType;
+    char seatRow;
+    int seatNumber;
+    double seatPrice;
     boolean seatState; // true = booked, false = available
 }
