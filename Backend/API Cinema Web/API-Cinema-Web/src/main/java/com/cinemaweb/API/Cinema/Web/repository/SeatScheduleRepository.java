@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SeatScheduleRepository extends JpaRepository<SeatSchedule, String> {
+    SeatSchedule findBySeatScheduleId(int seatScheduleId);
 }

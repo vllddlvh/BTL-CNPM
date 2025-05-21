@@ -1,6 +1,8 @@
 package com.cinemaweb.API.Cinema.Web.service;
 
+import com.cinemaweb.API.Cinema.Web.dto.request.BookingFoodAndDrinkRequest;
 import com.cinemaweb.API.Cinema.Web.dto.request.BookingRequest;
+import com.cinemaweb.API.Cinema.Web.dto.request.BookingSeatRequest;
 import com.cinemaweb.API.Cinema.Web.dto.response.BookingFoodAndDrinkResponse;
 import com.cinemaweb.API.Cinema.Web.dto.response.BookingResponse;
 import com.cinemaweb.API.Cinema.Web.dto.response.SeatResponse;
@@ -45,6 +47,9 @@ public class BookingService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private FoodAndDrinkRepository foodAndDrinkRepository;
+
     public BookingResponse getBooking(String bookingId) {
         int bookingIdInt = Integer.parseInt(bookingId);
         List<BookingFoodAndDrinkResponse> listBookingFoodAndDrinks = null;
@@ -68,28 +73,47 @@ public class BookingService {
         String id = context.getAuthentication().getName();
         User user = userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTS));
         booking.setUser(user);
+        bookingRepository.save(booking);
         // Tinh tien seat
-        
+
+        int bookingId = booking.getBookingId();
+
         double seatPrice = 0;
-        List<BookingSeat> bookingSeats = bookingSeatRepository.findAllByBooking_BookingId(booking.getBookingId())
-                .orElseThrow(() -> new RuntimeException("Invalid booking seat"));
+        List<BookingSeatRequest> bookingSeats = bookingRequest.getSeats();
         List<SeatSchedule> seatSchedules = new ArrayList<>();
         for (int i = 0; i < bookingSeats.size(); i++) {
-            seatPrice += bookingSeats.get(i).getPrice();
-            SeatSchedule seatSchedule =  bookingSeats.get(i).getSeatSchedule();
+            SeatSchedule seatSchedule =  seatScheduleRepository
+                    .findBySeatScheduleId(bookingSeats.get(i).getSeatScheduleId());
             seatSchedule.setSeatState(true);
             seatSchedules.add(seatSchedule);
+            seatPrice += seatSchedule.getSeat().getSeatPrice();
+
+            BookingSeat bookingSeat = BookingSeat.builder()
+                    .booking(booking)
+                    .seatSchedule(seatSchedule)
+                    .price(seatSchedule.getSeat().getSeatPrice())
+                    .build();
+            bookingSeatRepository.save(bookingSeat);
         }
         seatScheduleRepository.saveAll(seatSchedules);
-        bookingSeatRepository.saveAll(bookingSeats);
 
         double foodAndDrinksPrice = 0;
-        if(bookingFoodAndDrinkRepository.existsByBooking_BookingId(booking.getBookingId())) {
-            List<BookingFoodAndDrink> listBookingFoodAndDrink = bookingFoodAndDrinkRepository.
-                    findByBooking_BookingId(booking.getBookingId());
+        if(bookingRequest.getFoodAndDrinks() != null) {
+            List<BookingFoodAndDrinkRequest> listBookingFoodAndDrink =
+                    bookingRequest.getFoodAndDrinks();
 
             for (int i = 0; i < listBookingFoodAndDrink.size(); i++ ) {
-                foodAndDrinksPrice += listBookingFoodAndDrink.get(i).getPrice();
+                FoodAndDrink foodAndDrink = foodAndDrinkRepository
+                        .findById(String.valueOf(listBookingFoodAndDrink.get(i).getFoodAndDrinkId()))
+                        .orElseThrow(() -> new RuntimeException("F&D id is not found"));
+                foodAndDrinksPrice += listBookingFoodAndDrink.get(i)
+                        .getQuantity() * foodAndDrink.getFoodAndDrinkPrice();
+
+                BookingFoodAndDrink bookingFoodAndDrink = BookingFoodAndDrink.builder()
+                        .foodAndDrink(foodAndDrink)
+                        .booking(booking)
+                        .quantity(listBookingFoodAndDrink.get(i).getQuantity())
+                        .build();
             }
         }
 

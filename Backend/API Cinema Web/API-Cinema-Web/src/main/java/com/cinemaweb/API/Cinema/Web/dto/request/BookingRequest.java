@@ -18,7 +18,7 @@ import static java.time.LocalDateTime.now;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookingRequest {
     int scheduleId;
-    List<BookingSeat> seats;
-    List<BookingFoodAndDrink> foodAndDrinks;
+    List<BookingSeatRequest> seats;
+    List<BookingFoodAndDrinkRequest> foodAndDrinks;
     LocalDateTime bookingDay = LocalDateTime.now();
 }
