@@ -52,7 +52,7 @@ public class BookingService {
 
     public BookingResponse getBooking(String bookingId) {
         int bookingIdInt = Integer.parseInt(bookingId);
-        List<BookingFoodAndDrinkResponse> listBookingFoodAndDrinks = null;
+        List<BookingFoodAndDrinkResponse> listBookingFoodAndDrinks = new ArrayList<>();
         if (bookingFoodAndDrinkRepository.existsByBooking_BookingId(bookingIdInt)) {
             listBookingFoodAndDrinks = bookingFoodAndDrinkMapper.toListBookingFoodAndDrinks(
                     bookingFoodAndDrinkRepository.findByBooking_BookingId(bookingIdInt));
@@ -113,7 +113,11 @@ public class BookingService {
                         .foodAndDrink(foodAndDrink)
                         .booking(booking)
                         .quantity(listBookingFoodAndDrink.get(i).getQuantity())
+                        .price(listBookingFoodAndDrink.get(i)
+                                .getQuantity() * foodAndDrink.getFoodAndDrinkPrice())
                         .build();
+
+                bookingFoodAndDrinkRepository.save(bookingFoodAndDrink);
             }
         }
 

@@ -14,6 +14,5 @@ public interface BookingSeatMapper {
 
 
     @Mapping(source = "seatScheduleId", target = "seatSchedule.seatScheduleId")
-    @Mapping(source = "bookingId", target = "booking.bookingId")
     BookingSeat toBookingSeat(BookingSeatRequest request);
 }

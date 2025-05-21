@@ -51,7 +51,8 @@ public class SecurityConfig {
             "/bookingFoodAndDrink",
             "/bookingFoodAndDrink/{bookingFoodAndDrinkId}",
             "/seatSchedule",
-            "foodanddrink"
+            "foodanddrink",
+            "/booking"
     };
 
 
