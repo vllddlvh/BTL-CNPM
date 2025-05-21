@@ -19,6 +19,5 @@ public interface BookingFoodAndDrinkMapper {
     List<BookingFoodAndDrinkResponse> toListBookingFoodAndDrinks(List<BookingFoodAndDrink> listBookingFoodAndDrink);
 
     @Mapping(source = "foodAndDrinkId", target = "foodAndDrink.foodAndDrinkId")
-    @Mapping(source = "bookingId", target = "booking.bookingId")
     BookingFoodAndDrink toCreateBookingFoodAndDrink(BookingFoodAndDrinkRequest bookingFoodAndDrinkCreateRequest);
 }

@@ -5,9 +5,10 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3307/cinemaweb?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/cinema_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: root
-    password: Daolelongvu2005@
+#    password: Daolelongvu2005@
+    password: "0000"
   jpa:
     hibernate:
       ddl-auto: none

@@ -13,4 +13,5 @@ public class FoodAndDrinkResponse {
     String foodAndDrinkName;
     String cinemaName;
     double foodAndDrinkPrice;
+    String imageFoodAndDrink;
 }
