@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -122,6 +123,19 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiResponseError> handlingRollbackException(RollbackException e) {
         ApiResponseError apiResponseError = ApiResponseError.builder()
                 .code(9992)
+                .message(e.getMessage())
+                .build();
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(apiResponseError);
+    }
+
+
+    @ExceptionHandler(value = JwtException.class)
+    public ResponseEntity<ApiResponseError> handlingJwtException(JwtException e) {
+        ApiResponseError apiResponseError = ApiResponseError.builder()
+                .code(9993)
                 .message(e.getMessage())
                 .build();
 

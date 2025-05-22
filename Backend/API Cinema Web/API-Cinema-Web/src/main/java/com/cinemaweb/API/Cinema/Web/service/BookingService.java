@@ -67,6 +67,25 @@ public class BookingService {
         return booking;
     }
 
+
+
+    public List<BookingResponse> getAllMyBooking() {
+        var context = SecurityContextHolder.getContext();
+        String userId = context.getAuthentication().getName();
+        var bookings =  bookingRepository.findAllByUser_ID(userId)
+                .orElseThrow(() -> new RuntimeException("User chua tung co hoa don nao!"));
+        List<Integer> bookingIds = new ArrayList<>();
+        for (Booking booking : bookings) {
+            bookingIds.add(booking.getBookingId());
+        }
+
+        List<BookingResponse> bookingResponses = new ArrayList<>();
+        for (Integer bookingId : bookingIds) {
+            bookingResponses.add(getBooking(Integer.toString(bookingId)));
+        }
+        return bookingResponses;
+    }
+
     public void createBooking(BookingRequest bookingRequest) {
         Booking booking = bookingMapper.toCreationBooking(bookingRequest);
         var context = SecurityContextHolder.getContext();
