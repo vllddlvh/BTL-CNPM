@@ -49,7 +49,7 @@ public class RoomService {
 
         for (int row = 1; row <= numRows; row++) {
             char alphabetRow = (char) (row + 64);
-            for (int col = 1; col < numCols; col++) {
+            for (int col = 1; col <= numCols; col++) {
                 Seat seat = Seat.builder()
                         .room(room)
                         .seatType("")
