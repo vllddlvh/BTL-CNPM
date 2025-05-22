@@ -51,7 +51,7 @@ public class UserService {
         return users.stream().map(userMapper::toUserResponse).toList();
     }
 
-    // Chinh sua
+
     public UserResponse getMyInfo() {
         var context = SecurityContextHolder.getContext();
         String id = context.getAuthentication().getName();

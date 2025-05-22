@@ -470,7 +470,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('4da4ed59-19c8-483e-9fda-fcf1d238a60a','Daolelongvu','$2a$10$ka08fKPXNWi1OcuHjmwzVuZwTqDrnkRm0tsOo.gfmjtiR1nk2TF1W','Dao','Vu','2005-06-05',1,'default avatar','daolelongvu@gmail.com','0986770920',NULL),('d2733469-36ff-418f-8508-7c3c3a4ed433','admin','$2a$10$MkRv63Lk9/eUGjZXQb1HW.WNGFxy2fvDR0VXHfL7uws6vIGe4qxTy','admin','admin','2005-09-06',1,NULL,'admin@cinemaweb.com','000000000',NULL);
+INSERT INTO `user` VALUES ('4da4ed59-19c8-483e-9fda-fcf1d238a60a','Daolelongvu','$2a$10$ka08fKPXNWi1OcuHjmwzVuZwTqDrnkRm0tsOo.gfmjtiR1nk2TF1W','Dao','Vu','2005-06-05',1,'default avatar','daolelongvu@gmail.com','0986770920',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
